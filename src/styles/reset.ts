@@ -1,8 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyle =  createGlobalStyle`
- 
-
+export const GlobalStyle = createGlobalStyle`
  :root {
     font-size: 62.5%;
     scroll-behavior: smooth;
