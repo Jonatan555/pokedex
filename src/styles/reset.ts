@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
- :root {
+  :root {
     font-size: 62.5%;
     scroll-behavior: smooth;
   }
@@ -60,5 +60,4 @@ export const GlobalStyle = createGlobalStyle`
     display: grid;
     place-content: center;
   }
-
 `;
