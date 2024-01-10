@@ -8,10 +8,11 @@ type Input = {
 };
 
 export function Header() {
-   const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Input>();
 
@@ -32,14 +33,16 @@ export function Header() {
           <label htmlFor="inputSearch" className="srOnly">
             pesquisar pokemon
           </label>
+
           <input
             type="text"
             id="inputSearch"
-            placeholder="Pesquisar  Pokémon"
+            placeholder="Pesquisar Pokémon"
             {...register("inputSearch", {
               required: "Preencha o nome do Pokémon",
             })}
           />
+
           <span className="InputError">{errors.inputSearch?.message}</span>
         </section>
         <button type="submit">Pesquisar</button>
