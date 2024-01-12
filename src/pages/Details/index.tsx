@@ -16,8 +16,8 @@ export function Details() {
 
   return (
     <Container>
-      {isLoading && <span className="feedbackloading">Loading...</span>}
-      {isLoading && error && <span className="feedbackloading">Error...</span>}
+      {isLoading && <span className="feedbackLoading">Loading...</span>}
+      {isLoading && error && <span className="feedbackLoading">Error...</span>}
       {data && (
         <div className="boxDetails">
           <button onClick={() => navigate(-1)} className="buttonBackPage">
@@ -30,7 +30,7 @@ export function Details() {
               alt={data.name}
             />
           </div>
-          
+
           <div className="boxStatus">
             <strong>
               #{data.id} {data.name}
