@@ -37,12 +37,12 @@ export function useQueryPokemonPage() {
 
   function nextPage() {
     setPage((prevValue) => prevValue + 1);
-    navigate(`?page ${page + 1}`);
+    navigate(`?page=${page + 1}`);
   }
 
   function prevPage() {
     setPage((prevValue) => prevValue - 1);
-    navigate(`?page ${page - 1}`);
+    navigate(`?page=${page - 1}`);
   }
 
   useEffect(() => {
