@@ -3,6 +3,7 @@ import { API } from "../configs/api";
 import { Pokemon } from "../@types/pokemon";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { set } from "react-hook-form";
 
 export function useQueryPokemonPage() {
   const [page, setPage] = useState(1);
@@ -47,9 +48,24 @@ export function useQueryPokemonPage() {
 
   useEffect(() => {
     const pageQuery = Number(searchParams[0].get("page"));
-
     setPage(pageQuery || 1);
-  }, [searchParams]);
+    console.log(pageQuery);
+    
+
+    if (totalPages > 0) {
+      if (pageQuery > totalPages) {
+        navigate(`?page= ${totalPages}`);
+        setPage(totalPages);
+        console.log(totalPages);
+        return;
+      }
+      if (pageQuery > totalPages) {
+        navigate(`?page= `);
+        setPage(totalPages);
+        return;
+      }
+    }
+  }, [searchParams, page, totalPages, navigate]);
 
   const query = useQuery({
     queryKey: ["getPokemonPage", page, limit],
