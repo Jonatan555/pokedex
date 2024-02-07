@@ -44,21 +44,26 @@ export function Details() {
 
             <div className="boxTypes">
               {data.types.map((type) => {
-                return <CardType key={type.type.name} type={type.type.name} size={16}/>;
+                return (
+                  <CardType
+                    key={type.type.name}
+                    type={type.type.name}
+                    size={16}
+                  />
+                );
               })}
             </div>
-
-            <div className="boxStats">
-              {data.stats.map((status) => {
-                return (
-                  <div className="stats" key={status.stat.name}>
-                   <span className="statsName">{status.stat.name}</span>
-                   <progress value={status.base_stat} max={200}/>
-                   <span className="statsValue">{status.base_stat}</span>
-                  </div>
-                );
-             })}
-            </div>
+          </div>
+          <div className="boxStats">
+            {data.stats.map((status) => {
+              return (
+                <div className="stats" key={status.stat.name}>
+                  <span className="statsName">{status.stat.name}</span>
+                  <progress value={status.base_stat} max={200} />
+                  <span className="statsValue">{status.base_stat}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
