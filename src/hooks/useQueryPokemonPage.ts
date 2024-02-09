@@ -1,71 +1,70 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "../configs/api";
-import { Pokemon } from "../@types/pokemon";
-import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { set } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Pokemon } from "../@types/pokemon";
 
 export function useQueryPokemonPage() {
   const [page, setPage] = useState(1);
-  const [limit, setlimit] = useState(30);
-  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(30);
+  const [totalPages, setTotalPages] = useState(0);
 
   const navigate = useNavigate();
   const searchParams = useSearchParams();
 
   async function getPokemonPage({ page = 1, limit = 30 }) {
+    if (page <= 0) page = 1;
     const offset = (page - 1) * limit;
-    const { data } = await API.get(`/pokemon? limit=${limit}&offset=${offset}`);
+    const { data } = await API.get(`/pokemon?limit=${limit}&offset=${offset}`);
 
-    const pokemonPromises = data.results.map(
-      async (pokemon: { url: string }) => {
-        const response = await fetch(pokemon.url);
-        const data = await response.json();
-        return data;
-      }
-    );
+    const pokemonPromise = data.results.map(async (pokemon: { url: string }) => {
+      const response = await fetch(pokemon.url);
+      const data = await response.json();
+      return data;
+    });
 
-    const pokemonData = await Promise.all(pokemonPromises);
+    const pokemonData = await Promise.all(pokemonPromise);
 
     const totalPokemon = data.count;
     const totalPagesAPI = Math.ceil(totalPokemon / limit);
 
-    if (totalPages != totalPagesAPI) {
-      setTotalPages(totalPagesAPI);
-    }
+    if (totalPages != totalPagesAPI) setTotalPages(totalPagesAPI);
+
     return pokemonData as Pokemon[];
   }
 
   function nextPage() {
-    setPage((prevValue) => prevValue + 1);
-    navigate(`?page=${page + 1}`);
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
+      navigate(`?page=${page + 1}`);
+    }
   }
 
   function prevPage() {
-    setPage((prevValue) => prevValue - 1);
-    navigate(`?page=${page - 1}`);
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+      navigate(`?page=${page - 1}`);
+    }
   }
 
   useEffect(() => {
     const pageQuery = Number(searchParams[0].get("page"));
     setPage(pageQuery || 1);
-    console.log(pageQuery);
-    
 
     if (totalPages > 0) {
       if (pageQuery > totalPages) {
-        navigate(`?page= ${totalPages}`);
+        navigate(`?page=${totalPages}`);
         setPage(totalPages);
-        console.log(totalPages);
         return;
       }
-      if (pageQuery > totalPages) {
-        navigate(`?page= `);
-        setPage(totalPages);
+
+      if (pageQuery < 1) {
+        navigate(`?page=1`);
+        setPage(1);
         return;
       }
     }
-  }, [searchParams, page, totalPages, navigate]);
+  }, [page, totalPages, searchParams, navigate]);
 
   const query = useQuery({
     queryKey: ["getPokemonPage", page, limit],
@@ -76,8 +75,8 @@ export function useQueryPokemonPage() {
     ...query,
     page,
     totalPages,
-    setlimit,
     nextPage,
     prevPage,
+    setLimit,
   };
 }

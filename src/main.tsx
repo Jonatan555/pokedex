@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { GlobalStyle } from "./styles/reset.ts";
-import { ThemeProvider } from "styled-components";
-import { appTheme } from "./styles/theme.ts";
-import { AppRoutes } from "./routes/index.tsx";
+import { AppRoutes } from "./routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "styled-components";
+import { appTheme } from "./styles/theme";
+import { GlobalStyles } from "./styles/global";
 
 const queryClient = new QueryClient();
 
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={appTheme}>
         <AppRoutes />
-        <GlobalStyle />
+        <GlobalStyles />
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>

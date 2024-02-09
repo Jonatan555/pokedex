@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.footer`
   background: ${({ theme }) => theme.colors.primary};
   padding: 2.4rem 3.2rem;
   width: 100%;
@@ -13,7 +13,7 @@ export const Container = styled.div`
     font-size: 1.2rem;
     border-radius: 0.8rem;
     padding: 1.2rem;
-    background: #0002; /*# eee2 */
+    background: #eee2;
     display: block;
     color: ${({ theme }) => theme.colors.light};
     text-align: center;
@@ -21,13 +21,10 @@ export const Container = styled.div`
 
   @media (min-width: 768px) {
     padding: 2.4rem 3.2rem;
+
     a {
       font-size: 2.4rem;
       padding: 3.2rem;
     }
-  }
-
-  h1 {
-    font-size: 1.4rem;
   }
 `;

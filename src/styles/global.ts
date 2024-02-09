@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
   :root {
     font-size: 62.5%;
     scroll-behavior: smooth;
@@ -47,17 +47,23 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1.2rem;
     display: block;
     position: absolute;
-    margin-top: 0.4rem;
+    margin-top: 0.6rem;
     text-shadow: 1px 1px 1px #0008;
   }
 
-  .feedbackLoading {
-    width: 100%;
-    margin: 15% auto;
+  .loading {
     font-weight: 700;
-    font-size: 2.0rem;
+    font-size: 1.6rem;
     color: lightgray;
     display: grid;
     place-content: center;
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (min-width: 768px) {
+    .loading {
+      font-size: 2.0rem;
+    } 
   }
 `;

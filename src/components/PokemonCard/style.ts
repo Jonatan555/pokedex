@@ -12,6 +12,9 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   transition: scale 100ms;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 
   &:hover {
     scale: 1.05;

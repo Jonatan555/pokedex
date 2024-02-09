@@ -1,11 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Container } from "./style";
 import { useQueryPokemonDetails } from "../../hooks/useQueryPokemonDetails";
-import { useEffect } from "react";
+import { Container } from "./style";
 import { CardType } from "../../components/CardType";
+import pokeball from "../../assets/pokeball.png";
+import { useEffect } from "react";
+
+type Params = {
+  name: string;
+};
 
 export function Details() {
-  const { name } = useParams();
+  const { name } = useParams<Params>();
   const { data, isLoading, error } = useQueryPokemonDetails(name!);
   const navigate = useNavigate();
 
@@ -17,8 +22,9 @@ export function Details() {
 
   return (
     <Container>
-      {isLoading && <span className="feedbackLoading">Loading...</span>}
-      {isLoading && error && <span className="feedbackLoading">Error...</span>}
+      {isLoading && <span className="loading">Loading...</span>}
+      {!isLoading && error && <span className="loading">Error...</span>}
+
       {data && (
         <div className="boxDetails">
           <button onClick={() => navigate(-1)} className="buttonBackPage">
@@ -27,14 +33,14 @@ export function Details() {
 
           <div className="pokemonImage">
             <img
-              src={data.sprites.other["official-artwork"].front_default}
+              src={data.sprites.other["official-artwork"].front_default || pokeball}
               alt={data.name}
             />
           </div>
 
           <div className="boxStatus">
             <strong>
-              #{data.id} {data.name}
+              #{data.id} {data.name[0].toUpperCase() + data.name.substring(1)}
             </strong>
 
             <div className="sizePokemon">
@@ -44,22 +50,17 @@ export function Details() {
 
             <div className="boxTypes">
               {data.types.map((type) => {
-                return (
-                  <CardType
-                    key={type.type.name}
-                    type={type.type.name}
-                    size={16}
-                  />
-                );
+                return <CardType key={type.type.name} type={type.type.name} size={16} />;
               })}
             </div>
           </div>
+
           <div className="boxStats">
-            {data.stats.map((status) => {
+            {data.stats?.map((status) => {
               return (
-                <div className="stats" key={status.stat.name}>
+                <div key={status.stat.name} className="stats">
                   <span className="statsName">{status.stat.name}</span>
-                  <progress value={status.base_stat} max={200} />
+                  <progress max={200} value={status.base_stat} />
                   <span className="statsValue">{status.base_stat}</span>
                 </div>
               );

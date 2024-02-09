@@ -26,7 +26,7 @@ export const Container = styled.main`
     align-items: center;
     justify-content: space-between;
 
-    .boxNumberPage {
+    .numberPage {
       font-size: 1.2rem;
       font-weight: 700;
     }
@@ -36,17 +36,17 @@ export const Container = styled.main`
       color: ${({ theme }) => theme.colors.light};
       font-size: 1rem;
       font-weight: 700;
-      padding: 0.6rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 0.8rem;
       box-shadow: 1px 1px 2px 0px #0008;
       text-shadow: 1px 1px 2px #0004;
 
-      &.disabled {
-        background: lightgray;
-      }
-
       &:not(:disabled):hover {
         filter: brightness(1.05);
+      }
+
+      &:disabled {
+        background: lightgray;
       }
     }
   }
@@ -55,6 +55,11 @@ export const Container = styled.main`
     h1 {
       margin-top: 2.4rem;
       font-size: 2.8rem;
+    }
+
+    .loading {
+      position: static;
+      margin-top: 15rem;
     }
 
     .gridCards {
@@ -66,7 +71,7 @@ export const Container = styled.main`
       width: 32rem;
       margin: 3.2rem auto 0;
 
-      .boxNumberPage {
+      .numberPage {
         font-size: 1.8rem;
       }
 
